@@ -43,7 +43,7 @@ eval((function() {
                     arg === "--color" ||
                     arg === "--format"
                 ) {
-                    j++;
+                    i++;
                 }
 
                 continue;
