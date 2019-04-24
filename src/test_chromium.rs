@@ -45,6 +45,19 @@ const DEFAULT_TEST_INDEX_HTML: &'static str = r#"
         __cargo_web.status = new Promise( function( resolve ) { Module['onExit'] = resolve; } );
         __cargo_web.target = "{{{ target }}}";
         Module['arguments'] = [{{#each arguments}} "{{{ this }}}", {{/each}}];
+        Object.defineProperty( Module, 'canvas', {
+            get: function() {
+                if( __cargo_web.canvas ) {
+                    return __cargo_web.canvas;
+                }
+
+                var canvas = document.createElement( 'canvas' );
+                document.querySelector( 'body' ).appendChild( canvas );
+                __cargo_web.canvas = canvas;
+
+                return canvas;
+            }
+        });
     </script>
     <script src="/__cargo-web__/test_runner.js"></script>
 </head>
